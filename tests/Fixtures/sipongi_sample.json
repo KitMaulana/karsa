@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "id": 101,
+            "latitude": -6.081,
+            "longitude": 106.157,
+            "conf": "high",
+            "satelit": "VIIRS",
+            "tanggal": "2026-09-20",
+            "jam": "14:30",
+            "frp": 12.5
+        },
+        {
+            "id": 102,
+            "lat": -6.15,
+            "lng": 106.24,
+            "kepercayaan": "medium",
+            "satellite": "MODIS",
+            "date": "2026-09-20",
+            "time": "1500"
+        },
+        {
+            "id": 103,
+            "y": -6.2,
+            "x": 106.3,
+            "confidence": "low",
+            "acq_date": "2026-09-20"
+        }
+    ]
+}
