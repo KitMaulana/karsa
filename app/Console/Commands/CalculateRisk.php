@@ -10,6 +10,7 @@ use App\Models\Report;
 use App\Models\RiskModel;
 use App\Models\RiskScore;
 use App\Models\WeatherObservation;
+use App\Services\Notify\AlertDispatcher;
 use App\Services\Risk\Co2Estimator;
 use App\Services\Risk\DataConfidence;
 use App\Services\Risk\RiskScorer;
@@ -76,7 +77,7 @@ class CalculateRisk extends Command
         }
 
         $weightedCount = $scorer->weightedHotspotCount($weightedInputs);
-        $sHotspot = $scorer->normalizeHotspot($weightedCount, (float) config('karsa.risk.hotspot_max', 10));
+        $sHotspot = $scorer->normalizeHotspot($weightedCount, (float) \App\Models\Setting::get('hotspot_max', config('karsa.risk.hotspot_max', 10)));
 
         $weatherToday = WeatherObservation::where('district_id', $district->id)
             ->where('is_forecast', false)
@@ -99,7 +100,8 @@ class CalculateRisk extends Command
         $level = RiskLevel::fromScore($score, $model->thresholds);
 
         $confidence = $dataConfidence->calculate($district, $hotspots24h, $weatherToday);
-        $co2 = $co2Estimator->estimateFromHotspotCount($hotspots24h->count());
+        $luasPerHotspot = (float) \App\Models\Setting::get('luas_per_hotspot_ha', config('karsa.co2.luas_per_hotspot_ha', 1.0));
+        $co2 = $co2Estimator->estimateFromHotspotCount($hotspots24h->count(), $luasPerHotspot);
 
         $previous = RiskScore::where('district_id', $district->id)
             ->where('calculated_at', '<=', $now->copy()->subHours(23))
@@ -192,7 +194,7 @@ class CalculateRisk extends Command
 
         $causeLabels = collect($causes)->pluck('label')->implode(', ') ?: 'peningkatan skor risiko';
 
-        Alert::create([
+        $alert = Alert::create([
             'district_id' => $district->id,
             'from_level' => $previousLevel?->value,
             'to_level' => $currentLevel->value,
@@ -200,6 +202,9 @@ class CalculateRisk extends Command
             'causes' => $causes,
             'is_manual' => false,
             'message' => "Risiko karhutla di {$district->name} naik".($previousLevel ? " dari {$previousLevel->label()}" : '')." ke {$currentLevel->label()}. Penyebab utama: {$causeLabels}. Lihat langkah pencegahan 72 jam.",
+            'sent_at' => now(),
         ]);
+
+        app(AlertDispatcher::class)->dispatch($alert);
     }
 }

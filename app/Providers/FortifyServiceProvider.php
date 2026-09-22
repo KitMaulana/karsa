@@ -6,8 +6,10 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -35,8 +37,29 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
+        // Kolom login tunggal "login" bisa diisi email ATAU nomor HP (CLAUDE.md Tahap 3).
+        // Nama field diatur lewat config('fortify.username') = 'login', bukan lewat method ini
+        // (Fortify::username() hanya getter yang membaca config, tidak ada setter).
+        Fortify::authenticateUsing(function (Request $request) {
+            $login = trim((string) $request->input('login'));
+
+            $user = str_contains($login, '@')
+                ? User::where('email', $login)->first()
+                : User::where('phone', $login)->first();
+
+            if (! $user || ! Hash::check((string) $request->input('password'), $user->password)) {
+                return null;
+            }
+
+            if ($user->is_blocked) {
+                return null;
+            }
+
+            return $user;
+        });
+
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower((string) $request->input('login')).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });

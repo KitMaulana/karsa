@@ -12,7 +12,7 @@ class WeatherObservation extends Model
 
     protected $fillable = [
         'district_id', 'observed_at', 'temp_max', 'rh_min', 'wind_max', 'rain_mm',
-        'dry_days', 'source', 'is_forecast',
+        'dry_days', 'source', 'is_forecast', 'is_demo',
     ];
 
     protected $casts = [

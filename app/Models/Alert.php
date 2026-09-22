@@ -13,7 +13,7 @@ class Alert extends Model
 
     protected $fillable = [
         'district_id', 'from_level', 'to_level', 'score', 'causes', 'is_manual',
-        'message', 'sent_at', 'created_by',
+        'message', 'sent_at', 'created_by', 'is_demo',
     ];
 
     protected $casts = [

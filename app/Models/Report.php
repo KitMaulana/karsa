@@ -15,7 +15,7 @@ class Report extends Model
     protected $fillable = [
         'user_id', 'district_id', 'lat', 'lng', 'accuracy_m', 'type', 'description',
         'media', 'exif', 'phash', 'trust_score', 'flags', 'status', 'verified_by',
-        'verified_at', 'rejection_reason', 'forwarded_at',
+        'verified_at', 'rejection_reason', 'forwarded_at', 'is_demo',
     ];
 
     protected $casts = [

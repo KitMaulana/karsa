@@ -13,7 +13,7 @@ class Hotspot extends Model
 
     protected $fillable = [
         'external_id', 'sources', 'satellite', 'lat', 'lng', 'confidence', 'confidence_raw',
-        'frp', 'detected_at', 'district_id', 'corroborated', 'raw',
+        'frp', 'detected_at', 'district_id', 'corroborated', 'raw', 'is_demo',
     ];
 
     protected $casts = [

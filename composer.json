@@ -11,12 +11,15 @@
         "laravel-notification-channels/webpush": "*",
         "laravel/fortify": "*",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "*",
         "laravel/socialite": "*",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laravel-lang/lang": "^15.36",
+        "laravel-lang/publisher": "^16.8",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",

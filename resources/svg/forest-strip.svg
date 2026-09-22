@@ -1,0 +1,26 @@
+<svg viewBox="0 0 390 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+    <!-- Lapisan pohon pinus 3 tingkat warna: belakang (gelap/samar) ke depan (terang), CLAUDE.md §4. -->
+    <g opacity="0.35" fill="#0F3A22">
+        <path d="M20 90 L20 55 L10 68 L18 68 L4 86 L36 86 L22 68 L30 68 Z" />
+        <path d="M70 90 L70 48 L58 64 L67 64 L50 84 L90 84 L73 64 L82 64 Z" />
+        <path d="M140 90 L140 52 L129 66 L137 66 L122 85 L158 85 L143 66 L151 66 Z" />
+        <path d="M210 90 L210 46 L197 63 L207 63 L188 84 L232 84 L213 63 L223 63 Z" />
+        <path d="M280 90 L280 54 L269 67 L277 67 L262 85 L298 85 L283 67 L291 67 Z" />
+        <path d="M345 90 L345 58 L335 70 L342 70 L330 86 L360 86 L348 70 L355 70 Z" />
+    </g>
+    <g opacity="0.6" fill="#1D4B2E">
+        <path d="M45 90 L45 50 L33 66 L42 66 L25 87 L65 87 L48 66 L57 66 Z" />
+        <path d="M110 90 L110 42 L96 61 L107 61 L86 86 L134 86 L113 61 L124 61 Z" />
+        <path d="M180 90 L180 46 L167 64 L177 64 L157 87 L203 87 L183 64 L193 64 Z" />
+        <path d="M250 90 L250 40 L235 60 L247 60 L224 86 L276 86 L253 60 L265 60 Z" />
+        <path d="M315 90 L315 50 L303 66 L312 66 L294 87 L336 87 L318 66 L327 66 Z" />
+    </g>
+    <g fill="#2A6E43">
+        <path d="M0 90 L0 60 L-8 72 L0 72 L-14 88 L20 88 L6 72 L14 72 Z" />
+        <path d="M95 90 L95 38 L78 60 L92 60 L68 86 L122 86 L98 60 L112 60 Z" />
+        <path d="M165 90 L165 34 L146 58 L162 58 L134 86 L196 86 L168 58 L184 58 Z" />
+        <path d="M235 90 L235 36 L217 59 L232 59 L206 86 L264 86 L238 59 L253 59 Z" />
+        <path d="M300 90 L300 44 L284 64 L297 64 L272 87 L328 87 L303 64 L316 64 Z" />
+        <path d="M370 90 L370 60 L358 74 L368 74 L350 88 L390 88 L372 74 L382 74 Z" />
+    </g>
+</svg>

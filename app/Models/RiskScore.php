@@ -13,7 +13,7 @@ class RiskScore extends Model
 
     protected $fillable = [
         'district_id', 'risk_model_id', 'calculated_at', 'score', 'level',
-        's_hotspot', 's_weather', 's_vulnerability', 'data_confidence', 'co2_estimate_t', 'detail',
+        's_hotspot', 's_weather', 's_vulnerability', 'data_confidence', 'co2_estimate_t', 'detail', 'is_demo',
     ];
 
     protected $casts = [

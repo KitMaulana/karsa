@@ -45,7 +45,9 @@ return [
     |
     */
 
-    'username' => 'email',
+    // Kolom login tunggal, bisa diisi email ATAU nomor HP (CLAUDE.md Tahap 3).
+    // Deteksi email/HP & pencarian user ditangani di FortifyServiceProvider::authenticateUsing().
+    'username' => 'login',
 
     'email' => 'email',
 
@@ -73,7 +75,7 @@ return [
     |
     */
 
-    'home' => '/home',
+    'home' => '/menu',
 
     /*
     |--------------------------------------------------------------------------
@@ -131,7 +133,8 @@ return [
     |
     */
 
-    'views' => true,
+    // Halaman GET dibuat sendiri (Blade, rute Indonesia: /masuk, /daftar, dst) -- lihat routes/web.php.
+    'views' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -164,17 +167,10 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        // Features::emailVerification(), // verifikasi email ditangani manual (registrasi juga bisa via nomor HP)
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0,
-        ]),
-        Features::passkeys([
-            'confirmPassword' => true,
-        ]),
+        // 2FA & passkeys di luar cakupan KARSA (lihat CLAUDE.md §5).
     ],
 
 ];

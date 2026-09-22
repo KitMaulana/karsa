@@ -5,7 +5,141 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource-variable/bricolage-grotesque';
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-display: 'Bricolage Grotesque Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Palet KARSA -- CLAUDE.md §4 */
+    --color-forest-950: #0f3a22;
+    --color-forest-800: #1d4b2e;
+    --color-forest-600: #2a6e43;
+    --color-pine-400: #4e9a5f;
+    --color-leaf-100: #ddebd3;
+    --color-cream-50: #f4f7ee;
+    --color-ink-500: #5b7263;
+
+    --color-risk-low: #7bc96f;
+    --color-risk-mid: #f5d35c;
+    --color-risk-high: #f28c38;
+    --color-risk-extreme: #d63b2f;
+    --color-water: #b9d9ec;
+}
+
+:root {
+    color-scheme: light;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body {
+    background-color: var(--color-cream-50);
+    color: var(--color-forest-950);
+    font-family: var(--font-sans);
+}
+
+.font-display {
+    font-family: var(--font-display);
+}
+
+/* Fokus keyboard terlihat jelas (WCAG AA) di seluruh elemen interaktif. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--color-forest-600);
+    outline-offset: 2px;
+}
+
+/* Wordmark KARSA: huruf lebar & tebal. */
+.karsa-wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+/* Kartu khas KARSA: putih, radius besar, border tipis, tanpa bayangan tebal. */
+.karsa-card {
+    background-color: #fff;
+    border-radius: 24px;
+    border: 1px solid var(--color-leaf-100);
+}
+
+/* Tombol utama: penuh, tinggi 56px, radius 16px. */
+.karsa-btn-primary {
+    background-color: var(--color-forest-800);
+    color: #fff;
+    border-radius: 16px;
+    height: 56px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: background-color 150ms ease;
+}
+
+.karsa-btn-primary:hover {
+    background-color: var(--color-forest-950);
+}
+
+.karsa-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Konten rich-text (artikel, panduan) dari Trix -- CLAUDE.md §7 poin 9. */
+.karsa-article p {
+    margin-bottom: 1em;
+}
+
+.karsa-article h1,
+.karsa-article h2,
+.karsa-article h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-forest-950);
+    margin: 1.2em 0 0.5em;
+}
+
+.karsa-article ul,
+.karsa-article ol {
+    margin: 0 0 1em 1.25em;
+}
+
+.karsa-article ul {
+    list-style: disc;
+}
+
+.karsa-article ol {
+    list-style: decimal;
+}
+
+.karsa-article a {
+    color: var(--color-forest-800);
+    text-decoration: underline;
+}
+
+.karsa-article img {
+    border-radius: 16px;
+    margin: 1em 0;
 }

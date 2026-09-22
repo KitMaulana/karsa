@@ -28,6 +28,8 @@ class User extends Authenticatable
         'google_id',
         'home_regency_id',
         'is_blocked',
+        'email_verified_at',
+        'phone_verified_at',
     ];
 
     protected $hidden = [

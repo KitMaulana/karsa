@@ -49,10 +49,11 @@ class SyncHotspots extends Command
             return self::SUCCESS;
         }
 
-        $bufferDegrees = ((float) config('karsa.risk.buffer_km', 5)) / 111; // ~perkiraan derajat per km
+        $bufferKm = (float) \App\Models\Setting::get('buffer_km', config('karsa.risk.buffer_km', 5));
+        $bufferDegrees = $bufferKm / 111; // ~perkiraan derajat per km
         $bbox = BBox::fromCenters($points, paddingDegrees: max(0.2, $bufferDegrees));
 
-        $priority = config('karsa.hotspot.provider_priority', ['sipongi', 'firms']);
+        $priority = \App\Models\Setting::get('provider_priority', config('karsa.hotspot.provider_priority', ['sipongi', 'firms']));
         $providers = [
             'sipongi' => fn () => new SipongiProvider,
             'firms' => fn () => new FirmsProvider,
@@ -129,7 +130,7 @@ class SyncHotspots extends Command
             }
         }
 
-        $bufferKm = (float) config('karsa.risk.buffer_km', 5);
+        $bufferKm = (float) \App\Models\Setting::get('buffer_km', config('karsa.risk.buffer_km', 5));
         $nearest = null;
         $nearestDistance = null;
 
