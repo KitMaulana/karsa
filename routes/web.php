@@ -29,6 +29,14 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/menu', Public\Menu::class)->name('menu');
 Route::get('/peta', Public\PetaRisiko::class)->name('peta');
+Route::get('/peta/sipongi', function () {
+    $enabled = (bool) \App\Models\Setting::get('sipongi_embed_enabled', config('karsa.sipongi_embed_enabled'));
+
+    return view('public.sipongi-embed', [
+        'enabled' => $enabled,
+        'url' => config('karsa.sipongi_public_map_url'),
+    ]);
+})->name('peta.sipongi');
 Route::get('/wilayah/{district:slug}', Public\DetailWilayah::class)->name('wilayah.show');
 Route::get('/aksi', Public\AksiPencegahan::class)->name('aksi');
 Route::view('/aksi/panduan', 'public.aksi-panduan')->name('aksi.panduan');

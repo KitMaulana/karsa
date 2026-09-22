@@ -20,7 +20,11 @@ return [
             'day_range' => 1,
         ],
         // Urutan sumber yang dicoba saat sinkronisasi (bisa ditimpa lewat tabel settings).
-        'provider_priority' => ['sipongi', 'firms'],
+        // FIRMS didahulukan karena API resmi & terdokumentasi, tidak perlu verifikasi
+        // DevTools seperti SiPongi+ (lihat §8.1). Semua sumber yang terkonfigurasi tetap
+        // dicoba & digabung (fusi data §8.3) -- urutan ini hanya memengaruhi tampilan di
+        // pengaturan admin, bukan eksklusi source lain.
+        'provider_priority' => ['firms', 'sipongi'],
         'sync_interval_minutes' => 60,
         'dedup' => [
             'distance_km' => 1,
@@ -141,9 +145,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Embed SiPongi+
+    | Embed SiPongi+ (pelengkap tampilan, BUKAN sumber data -- lihat §8.4)
     |--------------------------------------------------------------------------
+    | Dicek manual pada 2026-09-22: laman /peta SiPongi+ TIDAK mengirim header
+    | X-Frame-Options maupun Content-Security-Policy frame-ancestors, jadi
+    | iframe technically diizinkan. Tetap sediakan tautan "buka di tab baru"
+    | sebagai cadangan (situs SPA pihak ketiga bisa berubah kapan saja).
     */
-    'sipongi_embed_enabled' => false,
+    'sipongi_embed_enabled' => true,
     'sipongi_public_map_url' => 'https://sipongi.gakkum.kehutanan.go.id/peta',
 ];

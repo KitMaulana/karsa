@@ -59,7 +59,7 @@
     </div>
 
     <div class="px-5 pb-6">
-        <a href="{{ config('karsa.sipongi_public_map_url') }}" target="_blank" rel="noopener"
+        <a href="{{ route('peta.sipongi') }}"
            class="flex h-12 w-full items-center justify-center rounded-2xl border border-leaf-100 text-sm font-semibold text-forest-950">
             Buka peta SiPongi+
         </a>
