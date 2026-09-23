@@ -4,8 +4,18 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /
 
-    # Meneruskan semua request ke folder public/ jika DocumentRoot berada di root karsa
+    # 1. Arahkan file statis / aset fisik ke folder public/
     RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
+
+    # 2. Arahkan seluruh rute aplikasi ke public/index.php
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ public/index.php [L]
 </IfModule>
