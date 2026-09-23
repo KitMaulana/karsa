@@ -1,4 +1,4 @@
-<div>
+<div wire:init="loadAiAnalysis">
     <x-forest-header :title="$district->name" :back="true" />
 
     <div class="-mt-6 space-y-5 px-5 pb-6">
@@ -39,6 +39,60 @@
             </x-card>
         </div>
 
+        {{-- Analisis Cerdas Gemini AI --}}
+        @if($aiLoading)
+            <x-ai-processing-card 
+                title="AI GEMINI SEDANG MEMPROSES DATA NASA FIRMS DAN BMKG"
+                subtitle="Menganalisis sebaran titik panas satelit NASA & indikator cuaca BMKG untuk Kecamatan {{ $district->name }}..."
+            />
+        @elseif(!empty($aiAnalysis))
+            <div class="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50/60 p-4 shadow-xs">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-forest-800 text-white shadow-xs">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-forest-800">Tinjauan Cerdas Gemini AI</span>
+                            <h3 class="font-display text-xs font-bold text-forest-950">Prediksi & Mitigasi Cerdas</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        @if(!empty($aiAnalysis['tingkat_ancaman']))
+                            <span class="rounded-full bg-forest-800/10 px-2 py-0.5 text-[10px] font-semibold text-forest-900">
+                                {{ $aiAnalysis['tingkat_ancaman'] }}
+                            </span>
+                        @endif
+                        <button type="button" wire:click="refreshAiAnalysis" wire:loading.attr="disabled"
+                                class="flex h-6 w-6 items-center justify-center rounded-lg border border-emerald-200 bg-white/80 text-forest-800 hover:bg-emerald-100 transition shadow-2xs"
+                                title="Perbarui analisis AI">
+                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <p class="mt-2.5 text-xs text-forest-950 leading-relaxed">{{ $aiAnalysis['ringkasan_situasi'] }}</p>
+
+                @if(!empty($aiAnalysis['prediksi_72_jam']))
+                    <div class="mt-2.5 rounded-xl bg-amber-50/80 p-2.5 text-xs border border-amber-200/60">
+                        <span class="font-bold text-amber-900">⏱️ Proyeksi 72 Jam:</span>
+                        <p class="mt-0.5 text-ink-500">{{ $aiAnalysis['prediksi_72_jam'] }}</p>
+                    </div>
+                @endif
+
+                @if(!empty($aiAnalysis['rekomendasi_utama']))
+                    <div class="mt-2 text-xs flex items-start gap-1.5">
+                        <span class="font-bold text-forest-800 shrink-0">👉 Aksi:</span>
+                        <span class="text-ink-500">{{ $aiAnalysis['rekomendasi_utama'] }}</span>
+                    </div>
+                @endif
+            </div>
+        @endif
+
         @if($score)
             <x-card>
                 <h2 class="font-display font-bold text-forest-950">Faktor risiko</h2>
@@ -78,6 +132,6 @@
             </x-card>
         @endif
 
-        <a href="{{ route('aksi') }}" class="karsa-btn-primary">Lihat rekomendasi</a>
+        <a href="{{ route('aksi', ['kecamatan' => $district->slug]) }}" class="karsa-btn-primary">Lihat rekomendasi</a>
     </div>
 </div>

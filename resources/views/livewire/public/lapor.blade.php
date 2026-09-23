@@ -100,8 +100,9 @@ function laporForm() {
             window.addEventListener('offline', () => this.online = false);
 
             this.map = L.map(this.$refs.miniMap).setView([-6.12, 106.15], 11);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap &copy; CARTO',
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19,
             }).addTo(this.map);
 
             this.marker = L.marker(this.map.getCenter(), { draggable: true }).addTo(this.map);

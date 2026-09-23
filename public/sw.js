@@ -1,6 +1,6 @@
 // Service worker KARSA -- CLAUDE.md §14.
 // Naikkan versi ini setiap kali strategi cache berubah agar client lama diperbarui.
-const CACHE_VERSION = 'karsa-v1';
+const CACHE_VERSION = 'karsa-v2';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const API_CACHE = `${CACHE_VERSION}-api`;
 const TILE_CACHE = `${CACHE_VERSION}-tiles`;
@@ -56,8 +56,8 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Tile peta CartoDB: cache-first, dibatasi jumlah entri.
-    if (url.hostname.endsWith('basemaps.cartocdn.com')) {
+    // Tile peta (OSM / CartoDB): cache-first, dibatasi jumlah entri.
+    if (url.hostname.endsWith('tile.openstreetmap.org') || url.hostname.endsWith('basemaps.cartocdn.com')) {
         event.respondWith(cacheFirstWithLimit(request, TILE_CACHE, TILE_CACHE_MAX_ENTRIES));
 
         return;

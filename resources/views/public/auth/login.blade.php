@@ -46,11 +46,6 @@
             <div class="mt-auto space-y-3 pt-4">
                 <x-primary-button type="submit">Masuk</x-primary-button>
 
-                <a href="{{ route('auth.google') }}"
-                   class="flex h-14 w-full items-center justify-center gap-2 rounded-2xl border border-leaf-100 text-sm font-semibold text-forest-950">
-                    Masuk dengan Google
-                </a>
-
                 <p class="text-center text-sm text-ink-500">
                     Belum punya akun? <a href="{{ route('register') }}" class="font-semibold text-forest-800">Daftar</a>
                 </p>

@@ -76,3 +76,11 @@ it('menolak registrasi dengan email yang sudah terdaftar', function () {
 
     $response->assertSessionHasErrors('email');
 });
+
+it('menampilkan halaman pendaftaran tanpa tombol daftar google', function () {
+    $response = $this->get('/daftar');
+
+    $response->assertSuccessful();
+    $response->assertDontSee('Daftar dengan Google');
+    $response->assertDontSee('/auth/google');
+});

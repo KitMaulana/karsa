@@ -154,4 +154,16 @@ return [
     */
     'sipongi_embed_enabled' => true,
     'sipongi_public_map_url' => 'https://sipongi.gakkum.kehutanan.go.id/peta',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Gemini AI
+    |--------------------------------------------------------------------------
+    */
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-2.5-flash'),
+        'timeout_seconds' => 15,
+        'cache_minutes' => 60,
+    ],
 ];

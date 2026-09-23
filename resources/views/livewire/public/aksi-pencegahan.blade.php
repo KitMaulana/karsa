@@ -1,4 +1,4 @@
-<div x-data="{
+<div wire:init="loadAiMitigation" x-data="{
         checked: JSON.parse(localStorage.getItem('karsa_checklist') || '{}'),
         toggle(id) { this.checked[id] = !this.checked[id]; localStorage.setItem('karsa_checklist', JSON.stringify(this.checked)); }
     }">
@@ -32,6 +32,59 @@
                 </button>
             @endforeach
         </div>
+
+        {{-- Rekomendasi Mitigasi Cerdas AI (Google Gemini) --}}
+        @if($aiLoading)
+            <x-ai-processing-card 
+                title="AI GEMINI SEDANG MEMPROSES DATA NASA FIRMS DAN BMKG"
+                subtitle="Menyusun panduan aksi mitigasi taktis khusus kelompok {{ match($audience) { 'petani_pekebun' => 'Petani & Pekebun', 'sekolah' => 'Sekolah', default => 'Warga Umum' } }}..."
+            />
+        @elseif(!empty($aiMitigation) && !empty($aiMitigation['langkah_aksi']))
+            <div class="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50/60 p-4 shadow-xs">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-forest-800 text-white shadow-xs">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-forest-800">Rekomendasi Cerdas Gemini AI</span>
+                            <h3 class="font-display text-xs font-bold text-forest-950">{{ $aiMitigation['judul_fokus'] ?? 'Fokus Mitigasi Hari Ini' }}</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        @if(!empty($aiMitigation['urgensi']))
+                            <span class="rounded-full bg-forest-800/10 px-2 py-0.5 text-[10px] font-semibold text-forest-900">
+                                {{ $aiMitigation['urgensi'] }}
+                            </span>
+                        @endif
+                        <button type="button" wire:click="refreshAiMitigation" wire:loading.attr="disabled"
+                                class="flex h-6 w-6 items-center justify-center rounded-lg border border-emerald-200 bg-white/80 text-forest-800 hover:bg-emerald-100 transition shadow-2xs"
+                                title="Perbarui panduan mitigasi AI">
+                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-3 space-y-2">
+                    @foreach($aiMitigation['langkah_aksi'] as $aksi)
+                        <div class="rounded-2xl border border-leaf-100 bg-white/90 p-3 text-xs">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-forest-950">{{ $aksi['judul'] }}</span>
+                                @if(!empty($aksi['prioritas']))
+                                    <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">{{ $aksi['prioritas'] }}</span>
+                                @endif
+                            </div>
+                            <p class="mt-1 text-ink-500 leading-relaxed">{{ $aksi['deskripsi'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+                <p class="mt-2.5 text-[10px] text-ink-500 text-right">Analisis real-time data satelit NASA & cuaca BMKG</p>
+            </div>
+        @endif
 
         <div>
             <h2 class="font-display font-bold text-forest-950">Rencana aksi 72 jam ke depan</h2>

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\GoogleController;
 use App\Livewire\Admin;
 use App\Livewire\Public;
 use Illuminate\Support\Facades\Route;
@@ -18,13 +17,11 @@ Route::middleware('guest')->group(function () {
         return view('public.auth.register', ['regencies' => \App\Models\Regency::orderBy('name')->get()]);
     })->name('register');
     Route::view('/masuk', 'public.auth.login')->name('login');
+    Route::view('/login', 'public.auth.login');
     Route::view('/lupa-kata-sandi', 'public.auth.forgot-password')->name('password.request');
     Route::get('/reset-kata-sandi/{token}', function (string $token) {
         return view('public.auth.reset-password', ['token' => $token, 'email' => request('email')]);
     })->name('password.reset');
-
-    Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
-    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 });
 
 Route::get('/menu', Public\Menu::class)->name('menu');

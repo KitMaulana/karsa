@@ -65,3 +65,11 @@ it('menolak akun yang diblokir walau kata sandi benar', function () {
     $response->assertSessionHasErrors();
     $this->assertGuest();
 });
+
+it('menampilkan halaman login tanpa tombol login google', function () {
+    $response = $this->get('/masuk');
+
+    $response->assertSuccessful();
+    $response->assertDontSee('Masuk dengan Google');
+    $response->assertDontSee('/auth/google');
+});
