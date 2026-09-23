@@ -3,19 +3,20 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    DirectoryIndex public/index.php index.php
+
     RewriteEngine On
     RewriteBase /
 
-    # 1. Arahkan file statis / aset fisik ke folder public/
+    # 1. Jika mengakses halaman utama "/", langsung jalankan public/index.php
+    RewriteRule ^$ public/index.php [L]
+
+    # 2. Arahkan file statis / aset fisik ke folder public/
     RewriteCond %{REQUEST_URI} !^/public/
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # 2. Arahkan seluruh rute aplikasi ke public/index.php
+    # 3. Arahkan seluruh rute aplikasi ke public/index.php
     RewriteCond %{REQUEST_URI} !^/public/
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ public/index.php [L]
 </IfModule>
